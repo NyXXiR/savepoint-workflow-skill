@@ -1,0 +1,4 @@
+interface:
+  display_name: "Savepoint Workflow"
+  short_description: "Checkpoint implementation progress"
+  default_prompt: "Use $savepoint-workflow to keep this implementation resumable with an up-to-date savepoint checklist."
