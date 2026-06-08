@@ -4,6 +4,7 @@ Status: planning
 Started: YYYY-MM-DD HH:MM local
 Last updated: YYYY-MM-DD HH:MM local
 Agent/provider: unknown
+Continuation target: any capable coding agent
 
 ## Objective
 
@@ -20,6 +21,10 @@ Describe the requested implementation in one or two sentences.
 - Project/root:
 - Relevant stack/frameworks:
 - Existing conventions to follow:
+- Repository instructions read:
+- Source-of-truth files:
+- Non-negotiable constraints:
+- Forbidden approaches:
 - Important files/directories:
 - Dirty worktree notes:
 
@@ -50,6 +55,12 @@ Describe the requested implementation in one or two sentences.
 - Decision:
 - Assumption:
 
+## Session Transfer Notes
+
+- Context that existed only in chat and must be preserved:
+- User preferences or latest instructions:
+- Provider/tool limitations observed:
+
 ## Files Touched
 
 - `path/to/file`: reason for change
@@ -70,4 +81,4 @@ Describe the requested implementation in one or two sentences.
 
 ## Resume Prompt
 
-Continue this implementation by reading this savepoint first, checking the current working tree against the checklist, then proceeding from the first unchecked item that still matches the code.
+Continue this implementation in this repository by reading this savepoint first, then checking the current working tree, repository instructions, and verification status against the checklist. Proceed from the first unchecked item that still matches the code and preserve the documented constraints unless new repository evidence or user instructions supersede them.

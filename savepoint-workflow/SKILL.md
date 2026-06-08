@@ -1,28 +1,30 @@
 ---
 name: savepoint-workflow
-description: Provider-neutral savepoint workflow for AI agent apps such as Codex, Hermes, OpenClo, and other multi-provider coding agents. Use when starting non-trivial implementation work, long-running or multi-phase code changes, tasks likely to exceed the context or token budget, or any request that asks for checkpointed progress, resumable implementation, task savepoints, work continuation after interruption, implementation checklists, handoff notes, or another AI/provider to continue the work.
+description: Repository-backed savepoint workflow for continuing implementation work across AI agents, accounts, sessions, and providers such as Codex, Claude, Gemini, opencode, Hermes, and other coding agents. Use when starting non-trivial implementation work, long-running or multi-phase code changes, tasks likely to exceed context or token budget, provider/model/account switching, interrupted sessions, checkpointed progress, resumable implementation, task savepoints, implementation checklists, handoff notes, or another AI/provider continuing the work.
 ---
 
 # Savepoint Workflow
 
 ## Purpose
 
-Keep implementation work resumable by creating a small Markdown savepoint in the target project. A savepoint records the current objective, checklist, decisions, files, verification results, blockers, and resume prompt so another agent, provider, or session can continue without reconstructing the whole task.
+Keep implementation work resumable outside the chat session by creating a small Markdown savepoint in the target repository. The repository becomes the durable memory: a savepoint records the objective, checklist, repository constraints, decisions, files, verification results, blockers, and resume prompt so another agent, account, provider, model, or session can continue without reconstructing the whole task from prior conversation.
 
 ## Start Protocol
 
 Before making implementation edits:
 
 1. Inspect the repository enough to understand scope, existing conventions, and likely verification commands.
-2. Create or update a savepoint file under `.ai-savepoints/`.
-3. Name new files as `.ai-savepoints/YYYYMMDD-HHMM-task-slug.md` using local time when available.
-4. If an existing savepoint clearly belongs to the current task, resume from it instead of creating a duplicate.
-5. Use `assets/savepoint-template.md` as the structure unless the repository already has a stronger local convention.
+2. Look for repository instructions and source-of-truth rules before planning. Common examples: `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `opencode.json`, `.cursorrules`, `.cursor/rules/*`, `docs/domain-rules.md`.
+3. Create or update a savepoint file under `.ai-savepoints/`.
+4. Name new files as `.ai-savepoints/YYYYMMDD-HHMM-task-slug.md` using local time when available.
+5. If an existing savepoint clearly belongs to the current task, resume from it instead of creating a duplicate.
+6. Use `assets/savepoint-template.md` as the structure unless the repository already has a stronger local convention.
 
 The first savepoint must include:
 
 - Objective and acceptance criteria.
 - Current repository facts that matter.
+- Repository instructions read, source-of-truth files, and non-negotiable constraints.
 - Phased checklist with small, verifiable tasks.
 - Known constraints, assumptions, and open questions.
 - Exact files or areas expected to change.
