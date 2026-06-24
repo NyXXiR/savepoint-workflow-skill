@@ -28,16 +28,26 @@ It is intentionally small. There is no runtime dependency, server, database, or 
 
 ## Install
 
-Copy the `savepoint-workflow/` folder into your agent app's skills directory.
+Copy the `savepoint-workflow/` folder into a Codex skill directory.
 
-For Codex-style local skills:
+For vanilla Codex user-level skills:
 
 ```bash
-mkdir -p "${CODEX_HOME:-$HOME/.codex}/skills"
-cp -R savepoint-workflow "${CODEX_HOME:-$HOME/.codex}/skills/"
+git clone https://github.com/NyXXiR/savepoint-workflow-skill.git
+mkdir -p "$HOME/.agents/skills"
+cp -R savepoint-workflow-skill/savepoint-workflow "$HOME/.agents/skills/"
 ```
 
-For shared local skill trees, copy or link the same folder into the location your agent reads.
+For a single repository:
+
+```bash
+mkdir -p .agents/skills
+cp -R /path/to/savepoint-workflow-skill/savepoint-workflow .agents/skills/
+```
+
+Restart Codex if the skill does not appear immediately.
+
+For shared local skill trees, copy or link the same folder into the location your agent reads. Codex supports symlinked skill folders.
 
 ## Invoke
 
