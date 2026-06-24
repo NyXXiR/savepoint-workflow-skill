@@ -13,8 +13,16 @@ Describe the requested implementation in one or two sentences.
 ## Acceptance Criteria
 
 - [ ] User-visible behavior or deliverable is complete.
+- [ ] Red/Green/Refactor or documented verification substitute is recorded.
 - [ ] Relevant tests, checks, or manual verification are complete.
 - [ ] Final state and remaining work are documented here.
+
+## TDD State
+
+- Red:
+- Green:
+- Refactor:
+- If test-first is not feasible, explain why and name the substitute verification:
 
 ## Current Repository Facts
 
@@ -34,18 +42,25 @@ Describe the requested implementation in one or two sentences.
 
 - [ ] Inspect relevant files and architecture.
 - [ ] Identify constraints and verification commands.
+- [ ] Reproduce or characterize current behavior.
 
-### Phase 2: Implement
+### Phase 2: Red
+
+- [ ] Add or identify the smallest useful failing/targeted check.
+- [ ] Record why test-first is not feasible if no Red check can be created.
+
+### Phase 3: Green
 
 - [ ] Make the smallest coherent implementation change.
-- [ ] Update or add focused tests when risk justifies it.
+- [ ] Update checklist items as each durable task lands.
 
-### Phase 3: Verify
+### Phase 4: Refactor And Verify
 
+- [ ] Refactor only after behavior is covered or characterized.
 - [ ] Run targeted checks.
 - [ ] Fix regressions or record blockers.
 
-### Phase 4: Savepoint
+### Phase 5: Savepoint
 
 - [ ] Update this file with final status.
 - [ ] Write a concise resume prompt for the next agent.
@@ -70,6 +85,10 @@ Describe the requested implementation in one or two sentences.
 | Command | Result | Notes |
 | --- | --- | --- |
 | `command here` | not run | reason |
+
+## Failed Or Abandoned Paths
+
+- None currently.
 
 ## Activity Log
 

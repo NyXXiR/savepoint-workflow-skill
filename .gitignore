@@ -1,0 +1,5 @@
+.DS_Store
+.agent-work/
+.ai-savepoints/
+node_modules/
+*.log

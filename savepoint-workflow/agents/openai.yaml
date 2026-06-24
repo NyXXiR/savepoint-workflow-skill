@@ -1,4 +1,4 @@
 interface:
   display_name: "Savepoint Workflow"
-  short_description: "Resume work across agents"
-  default_prompt: "Use $savepoint-workflow to keep this implementation resumable across agents, sessions, and providers."
+  short_description: "TDD checklist savepoints"
+  default_prompt: "Use $savepoint-workflow to run this implementation through a TDD-first checklist and keep it resumable across agents, sessions, and providers."

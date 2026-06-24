@@ -1,13 +1,21 @@
 ---
 name: savepoint-workflow
-description: Repository-backed savepoint workflow for continuing implementation work across AI agents, accounts, sessions, and providers such as Codex, Claude, Gemini, opencode, Hermes, and other coding agents. Use when starting non-trivial implementation work, long-running or multi-phase code changes, tasks likely to exceed context or token budget, provider/model/account switching, interrupted sessions, checkpointed progress, resumable implementation, task savepoints, implementation checklists, handoff notes, or another AI/provider continuing the work.
+description: TDD-first checklist execution with repository-backed savepoints for continuing implementation work across AI agents, accounts, sessions, and providers such as Codex, Claude, Gemini, opencode, Hermes, and other coding agents. Use when starting non-trivial implementation work, bug fixes, refactors, long-running or multi-phase code changes, tasks likely to exceed context or token budget, provider/model/account switching, interrupted sessions, checkpointed progress, resumable implementation, task savepoints, implementation checklists, handoff notes, or another AI/provider continuing the work.
 ---
 
 # Savepoint Workflow
 
 ## Purpose
 
-Keep implementation work resumable outside the chat session by creating a small Markdown savepoint in the target repository. The repository becomes the durable memory: a savepoint records the objective, checklist, repository constraints, decisions, files, verification results, blockers, and resume prompt so another agent, account, provider, model, or session can continue without reconstructing the whole task from prior conversation.
+Keep implementation work resumable outside the chat session by creating a small Markdown savepoint in the target repository. The repository becomes the durable memory: a savepoint records the objective, acceptance criteria, TDD state, checklist, repository constraints, decisions, files, verification results, blockers, and resume prompt so another agent, account, provider, model, or session can continue without reconstructing the whole task from prior conversation.
+
+The operating model is TDD-first checklist execution:
+
+- Characterize or reproduce current behavior before changing it.
+- Add or identify the smallest useful Red check when feasible.
+- Implement the smallest Green change.
+- Refactor only after behavior is protected or explicitly characterized.
+- Keep the checklist current enough that a fresh agent can resume from the first unchecked item.
 
 ## Start Protocol
 
@@ -23,12 +31,25 @@ Before making implementation edits:
 The first savepoint must include:
 
 - Objective and acceptance criteria.
+- TDD state: Red, Green, Refactor, and the reason if test-first is not feasible.
 - Current repository facts that matter.
 - Repository instructions read, source-of-truth files, and non-negotiable constraints.
 - Phased checklist with small, verifiable tasks.
 - Known constraints, assumptions, and open questions.
 - Exact files or areas expected to change.
 - Planned verification commands, even if tentative.
+
+## TDD Protocol
+
+For code changes, default to a Red/Green/Refactor loop:
+
+1. Red: reproduce the bug, characterize existing behavior, or add a focused failing test before implementation.
+2. Green: make the smallest coherent change that satisfies the focused check.
+3. Refactor: improve structure only after the behavior is covered or the user explicitly accepts characterization-only verification.
+
+If a failing test cannot be written first, record the reason in the savepoint and choose the nearest meaningful verification, such as a smoke command, type check, lint check, scripted reproduction, or manual QA path.
+
+For documentation-only or metadata-only changes, use content/structure verification as the TDD substitute and record that substitution.
 
 ## Checklist Rules
 
@@ -38,6 +59,7 @@ Keep the checklist honest and useful for a fresh agent:
 - Split vague items until another agent can continue without reconstructing the whole plan.
 - Prefer phase headings with task checkboxes beneath them.
 - Add new checklist items when implementation reveals hidden work.
+- Update checklist items immediately after each durable task lands, not only at the end.
 - Do not delete failed paths or abandoned attempts; move them to notes with the reason.
 - If blocked, record the blocker, evidence, and the smallest next question or external action needed.
 

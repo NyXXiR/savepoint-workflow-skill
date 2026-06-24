@@ -1,10 +1,30 @@
 # Savepoint Workflow Skill
 
-A small, repository-backed AI agent skill for keeping implementation work resumable across context limits, token exhaustion, account switches, model/provider switches, and interrupted sessions.
+TDD-first checklist execution for AI coding agents, backed by repository savepoints.
 
-Inspired by game savepoints, the skill tells an agent to create and maintain a Markdown savepoint under `.ai-savepoints/` before and during non-trivial implementation work. The repository becomes the durable memory, so another agent such as Codex, Claude, Gemini, opencode, Hermes, or another provider can resume from the savepoint instead of relying on the previous chat session.
+This skill tells an agent to turn non-trivial implementation work into a small, durable Markdown savepoint under `.ai-savepoints/`. The savepoint records the objective, acceptance criteria, Red/Green/Refactor state, checklist progress, decisions, touched files, verification results, blockers, and a resume prompt.
 
-Each savepoint contains the objective, checklist, repository constraints, decisions, changed files, verification log, blockers, and a resume prompt for the next agent.
+The goal is simple: if a session hits context limits, token exhaustion, account switching, provider switching, or interruption, the next capable agent can continue from the repository instead of reverse-engineering the previous chat.
+
+## What You Get
+
+- A TDD-first implementation checklist before edits begin.
+- Explicit Red/Green/Refactor notes for code changes.
+- A durable `.ai-savepoints/YYYYMMDD-HHMM-task-slug.md` handoff file.
+- Verification logs that separate passed checks, failed checks, and skipped checks.
+- A provider-neutral resume prompt for Codex, Claude, Gemini, opencode, Hermes, or another coding agent.
+
+## When To Use It
+
+Use this skill for:
+
+- feature work that may span multiple sessions
+- bug fixes where a failing test or reproduction matters
+- refactors that need a safe checklist
+- long-running coding tasks near context or token limits
+- handoffs between agents, accounts, models, or providers
+
+It is intentionally small. There is no runtime dependency, server, database, or package manager. The skill uses plain Markdown so the repository itself becomes the continuity layer.
 
 ## Install
 
@@ -17,7 +37,7 @@ mkdir -p "${CODEX_HOME:-$HOME/.codex}/skills"
 cp -R savepoint-workflow "${CODEX_HOME:-$HOME/.codex}/skills/"
 ```
 
-For other skill-enabled agent apps, add the same folder using that app's skill/plugin import flow. The skill has no runtime dependency and uses only plain Markdown.
+For shared local skill trees, copy or link the same folder into the location your agent reads.
 
 ## Invoke
 
@@ -27,4 +47,55 @@ Example prompt:
 Use $savepoint-workflow while implementing this change.
 ```
 
-The skill is designed for agent apps such as Codex, Claude, Gemini, opencode, Hermes, and other multi-provider coding agents.
+The skill will ask the agent to:
+
+1. Inspect repository instructions and current behavior.
+2. Create or resume a savepoint under `.ai-savepoints/`.
+3. Write acceptance criteria and a phased checklist.
+4. Run the nearest useful Red step before implementation when feasible.
+5. Implement in small Green steps and update the checklist as work lands.
+6. Refactor only after behavior is protected or explicitly characterized.
+7. Record verification results and a resume prompt before stopping.
+
+## Example Savepoint
+
+See [`examples/sample-savepoint.md`](examples/sample-savepoint.md) for a complete example of the artifact this skill asks agents to maintain.
+
+Short excerpt:
+
+```md
+## TDD State
+
+- Red: `npm test -- auth-refresh.test.ts` reproduced the expired-token failure.
+- Green: refreshed access-token path now passes the focused test.
+- Refactor: pending; keep changes scoped until the integration test passes.
+
+## Checklist
+
+- [x] Reproduce expired-token failure.
+- [x] Add focused regression test.
+- [ ] Run full auth suite.
+```
+
+## Repository Layout
+
+```text
+savepoint-workflow/
+  SKILL.md
+  agents/openai.yaml
+  assets/savepoint-template.md
+examples/
+  sample-savepoint.md
+```
+
+## Design Rules
+
+- Prefer TDD for code changes; document why when a failing test is not practical.
+- Never hide failed attempts. Record abandoned paths with the reason.
+- Keep secrets, tokens, and private chat-only context out of savepoints.
+- Use repository-relative paths and exact commands.
+- Make checkboxes honest: `[x]` only after the item is actually done.
+
+## License
+
+MIT
